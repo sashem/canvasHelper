@@ -1,0 +1,172 @@
+<script src="js/proyectosCtrl.js"></script>
+<link href='http://fonts.googleapis.com/css?family=The+Girl+Next+Door' rel='stylesheet' type='text/css'>
+<div class="row" ng-controller="proyectosCtrl">
+	<div class="col-lg-9">
+		<div class="proyectos">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<td colspan="2"><h3>Mis Proyectos</h3></td><td colspan="3" align="right">filtro : <input type="text" size="40" ng-model="filter"/></td>
+					</tr>
+					<tr>
+						<th>Nombre</th>
+						<th>Descripción</th>
+						<th>Creación</th>
+						<th>Modificación</th>
+						<th width="50">Acción</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="(i,proyector) in proyectos | filter: filter" ng-click="fetch_canvas(i)">
+						<td>{{proyector.nombre}}</td>
+						<td><div class="descripcion">{{proyector.descripcion}}</div></td>
+						<td>{{proyector.created_at}}</td>
+						<td>{{proyector.updated_at}}</td>
+						<td>
+							<a data-toggle="modal" ng-click="cargar_proyecto(i)" data-target="#actualizar" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span></a>
+							<a class="btn btn-warning" ng-click="borrar_proyecto(proyector.id)"><span class="glyphicon glyphicon-remove"></span></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p align="center" style="border-top:#CCC thin solid;"><a data-toggle="modal" data-target="#dialog" class="btn btn-primary">Agregar</a></p>
+		</div>
+	</div>
+	<div class="col-lg-3">
+		<div class="proyectos">
+			<table class="table table-hover canvas-select">
+				<thead>
+					<tr><th colspan="2"><h4 align="center">Canvas Asociados</h4></th></tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="(i,canva) in canvas">
+						<td><a href="#canvas{{opcion}}/{{canva.id}}">{{canva.nombre}}</a></td>
+						<td align="right">
+							<a data-toggle="modal" ng-click="cargar_canva(i)" data-target="#editar_canva"><span class="glyphicon glyphicon-pencil"></span></a>
+							<a ng-click="borrar_canva(canva.id)"><span class="glyphicon glyphicon-remove"></span></a>
+						</td>
+					</tr>
+					<tr>
+						<td align="center" colspan="2">
+							<a data-toggle="modal" data-target="#agregar_canvas" class="btn btn-success">+</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div>
+			Autoguardado <input type="radio" name="autosave" value="1" ng-model="opcion"/> Sí <input type="radio" name="autosave" value="2" ng-model="opcion"/> No
+		</div>
+	</div>
+	<div class="modal fade" id="dialog">
+		<div class="modal-dialog">
+		  	<div class="modal-content">
+		    	<div class="modal-body">
+			    	<div class="dialog-header">
+						Agregar proyecto <button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="dialog-body">
+						<form>
+								<div class="form-group">
+									<label>Nombre</label>
+									<input type="text" class="form-control" ng-model="proyecto.nombre" /> </br>
+								</div>
+								<div class="form-group">
+									<label>Descripción</label>
+									<textarea class="form-control" ng-model="proyecto.descripcion" rows="10"></textarea> </br>
+								</div>
+						</form>
+					</div>
+					<div class="dialog-footer" align="right">
+						<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">Cerrar</button>
+					    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="crear_proyecto()">Agregar</button>
+					</div>
+		    	</div>
+	  		</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="actualizar">
+		<div class="modal-dialog">
+		  	<div class="modal-content">
+		    	<div class="modal-body">
+			    	<div class="dialog-header">
+						Editar proyecto <button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="dialog-body">
+						<form>
+								<div class="form-group">
+									<label>Nombre</label>
+									<input type="text" class="form-control" ng-model="proyectoactualizable.nombre" value="{{target.nombre}}" /> </br>
+								</div>
+								<div class="form-group">
+									<label>Descripción</label>
+									<textarea class="form-control" ng-model="proyectoactualizable.descripcion" value="{{target.descripcion}}" rows="10"></textarea> </br>
+								</div>
+						</form>
+					</div>
+					<div class="dialog-footer" align="right">
+						<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">Cerrar</button>
+					    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="actualizar_proyecto()">Actualizar</button>
+					</div>
+		    	</div>
+	  		</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="agregar_canvas">
+		<div class="modal-dialog">
+		  	<div class="modal-content">
+		    	<div class="modal-body">
+			    	<div class="dialog-header">
+						Agregar Canvas <button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="dialog-body">
+						<form>
+								<div class="form-group">
+									<label>Nombre</label>
+									<input type="text" class="form-control" ng-model="canva.nombre" value="{{target_canva.nombre}}" /> </br>
+								</div>
+								<div class="form-group">
+									<label>Descripción</label>
+									<textarea class="form-control" ng-model="canva.descripcion" value="{{target_canva.descripcion}}" rows="10"></textarea> </br>
+								</div>
+						</form>
+					</div>
+					<div class="dialog-footer" align="right">
+						<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">Cerrar</button>
+					    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="crear_canva()">Agregar</button>
+					</div>
+		    	</div>
+	  		</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="editar_canva">
+		<div class="modal-dialog">
+		  	<div class="modal-content">
+		    	<div class="modal-body">
+			    	<div class="dialog-header">
+						Editar Canvas <button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="dialog-body">
+						<form>
+								<div class="form-group">
+									<label>Nombre</label>
+									<input type="text" class="form-control" ng-model="canvaactualizable.nombre" value="{{target_canva.nombre}}" /> </br>
+								</div>
+								<div class="form-group">
+									<label>Descripción</label>
+									<textarea class="form-control" ng-model="canvaactualizable.descripcion" value="{{target_canva.descripcion}}" rows="10"></textarea> </br>
+								</div>
+						</form>
+					</div>
+					<div class="dialog-footer" align="right">
+						<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">Cerrar</button>
+					    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="editar_item()">Actualizar</button>
+					</div>
+		    	</div>
+	  		</div>
+		</div>
+	</div>
+</div>

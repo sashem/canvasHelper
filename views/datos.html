@@ -1,0 +1,22 @@
+<script src="js/datosCtrl.js"></script>
+<div class="row">
+	<div class="col-lg-4 col-lg-offset-4 proyectos" ng-controller="datosCtrl">
+		<form ng-model="formulario">
+			<legend> Mis Datos </legend>
+			<div class="form-group">
+				<label>Nombre</label>
+				<input type="text" class="form-control" ng-model="user.dato_attributes.nombre" /> </br>
+			</div>
+			<div class="form-group">
+				<label>Apellido</label>
+				<input type="text" class="form-control" ng-model="user.dato_attributes.apellido" /> </br>
+			</div>
+			<div class="form-group">
+				<label>Correo electrónico</label>
+				<input type="text" class="form-control" ng-model="user.dato_attributes.mail" /> </br>
+			</div>
+			<a class="btn btn-primary" ng-click="enable_edit()">Editar</a>
+			<a class="btn btn-default" ng-click="update_datos()">Guardar</a>
+		</form>
+	</div>
+</div>

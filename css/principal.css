@@ -1,0 +1,150 @@
+body{
+	/*padding-top:60px;*/
+}
+.login{
+	height:200px;
+}
+.header{
+	width:100%;
+	border-bottom:solid thin #666;
+	height:32px;
+	text-align:center;
+	font-size:14pt;
+}
+#session-menu .navbar-btn{
+	margin:0;
+	border-radius: 5px;
+	background-color:#000;
+	color:#FFF;
+}
+.login-body{
+	padding-top:10px;
+	border-bottom:solid thin #666;
+}
+.login-footer{
+	padding-top: 20px;
+}
+.recordar-login{
+	display:inline-block;
+	margin-left:60px;
+}
+.dialog-header{
+	display:block;
+	margin-bottom:10px;
+	border-bottom: thin solid #CCC;
+}
+.dialog-footer{
+	display:block;
+	margin-top:10px;
+	padding-top:10px;
+	border-top: thin solid #CCC;
+}
+.proyectos{
+	border-radius: 5px;
+	border: solid 2px gray;
+}
+.proyectos table{
+	width:100% !important;
+	margin:0;
+}
+.proyectos h3{
+	margin:0;
+}
+.proyectos td{
+	width:110px;
+	vertical-align:middle !important;
+	font-size: 10pt;
+	overflow: hidden; 
+}
+.proyectos .descripcion{
+	width:450px;
+	padding-left:10px;
+	padding-right:10px;
+	overflow: hidden;
+	text-align:justify;
+}
+.proyectos .btn-primary{
+	margin-top:20px;
+}
+.canvas-select thead{
+	background-color: #E7E7FF;
+	color: #666;
+}
+.canvas-select td{
+	font-family: 'The Girl Next Door', cursive;
+	font-size:16px;
+	font-weight:400;
+}
+.simple, .doble, .simple_bajo{
+	border:thin solid #CCC;
+	text-align:center;
+}
+.simple:hover, .doble:hover, .simple_bajo:hover{
+	border:2px solid #e4dc34;
+	text-align:center;
+}
+#canva_title h3{
+	font-size: 24pt;
+	font-weight:bold;
+	font-family: 'The Girl Next Door', cursive;
+	border-bottom:thin solid #CCC;
+}
+#canva_wrapp{
+	font-family: 'Kavoon', cursive;
+	color:#8080ff;
+}
+#canva_wrapp .col-lg-2{
+	padding-left:0;
+	padding-right:0;
+}
+.simple{
+	height:220px;
+}
+.doble{
+	height:440px;
+	z-index:10;
+}
+.simple_bajo{
+	height:150px;
+}
+.item_canva{
+	max-width:190px;
+	word-wrap:break-word;
+	overflow:hidden;
+	white-space:normal;
+	z-index:500;
+	font-family: 'Shadows Into Light', cursive;
+	font-size:14pt;
+	color:#666666;
+}
+.header_canva{
+	width:100%;
+	background-color: #F0F5F5;
+}
+.colorpicker{
+	width:30px;
+	height:30px;
+	display:inline-block;
+}
+.colorpicker_table{
+	vertical-align:middle;
+}
+.colorpicker.active{
+	border:#000000 solid 3px;
+}
+#canva_wrapp .tooltip-inner{
+	background-color:#ffffca;
+	color:#666666;
+	font-family:"Arial Black";
+	border:thin solid #CCC;
+}
+.item_canva.over_active{
+	border:#a0c6fe solid 3px !important;
+	
+}
+.deshacer_activo{
+	display:inline;	
+}
+.deshacer_inactivo{
+	display:none;
+}

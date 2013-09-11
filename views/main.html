@@ -1,0 +1,25 @@
+<div class="row">
+	<div class="col-lg-12">
+		<div class="row" ng-controller="loginCtrl">
+			<div id="login-form" class="col-lg-4 col-lg-offset-4 login">
+				<div class="header">
+					Inicia sesión			
+				</div>
+				<div class="login-body">
+					<div class="form-group">
+				      <label for="username">Usuario</label>
+				      <input type="text" ng-model="user.username" class="form-control" id="username">
+				    </div>
+				    <div class="form-group">
+				      <label for="password">Contraseña</label>
+				      <input type="password" ng-model="user.password" class="form-control" id="password">
+				    </div>				    
+				</div>
+				<div class="login-footer">
+					<a class="btn btn-default" ng-click="login_try()">Iniciar sesión</a>
+					<div class="recordar-login"><input type="checkbox" ng-model="recordar" /> Recordar mis datos </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

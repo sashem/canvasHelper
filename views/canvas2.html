@@ -1,0 +1,218 @@
+<script src="js/canvasCtrl.js"></script>
+<link href='http://fonts.googleapis.com/css?family=The+Girl+Next+Door' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Marck+Script' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+<div class="row" ng-controller="canvasCtrl">
+	<div class="col-lg-10 col-lg-offset-1">
+		<div align="center" id="canva_title">
+			<a class="btn btn-info" ng-click="deshacer()" ng-class="check_history()">Deshacer <span class="glyphicon glyphicon-backward"></span></a>
+			<a class="btn btn-success" ng-click="guardar_canva()">Guardar <span class="glyphicon glyphicon-save"></span></a>
+			<h3>{{canva.nombre}}</h3></div>
+		<div id="canva_wrapp">
+			<div class="row">
+					<div class="col-lg-2 col-lg-offset-1">
+						<div class="doble" ng-click="setear_seccion('socios_attributes')">
+							<div class="header_canva">Socios clave</div></br>
+							<a ng-repeat="(i,socio) in canva.socios_attributes track by $id($index)"  
+							style="background-color: {{socio.color}}" 
+							ng-mouseover="pick_color2(socio.color)"
+							ng-mouseleave="clear_active_color()"
+							ng-class="activecolor2(socio.color)"
+							ng-click="setear_item(i,'socios_attributes')"
+							onclick="event.stopPropagation();" 
+							class="item_canva btn btn-default" 
+							tooltip="{{socio.descripcion}}">
+								{{socio.abreviacion}}
+							</a>
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="simple" ng-click="setear_seccion('recursos_attributes')">
+							<div class="header_canva">Recursos clave</div></br>
+							<a ng-repeat="(i,recurso) in canva.recursos_attributes track by $id($index)"  
+							style="background-color: {{recurso.color}}"
+							ng-mouseover="pick_color2(recurso.color)"
+							ng-mouseleave="clear_active_color()"
+							ng-class="activecolor2(recurso.color)"
+							ng-click="setear_item(i,'recursos_attributes')" 
+							onclick="event.stopPropagation();" 
+							class="item_canva btn btn-default" 
+							tooltip="{{recurso.descripcion}}">
+								{{recurso.abreviacion}}
+							</a>
+						</div>
+						<div class="simple" ng-click="setear_seccion('actividades_attributes')">
+							<div class="header_canva">Actividades clave</div></br>
+							<a ng-repeat="(i,actividade) in canva.actividades_attributes track by $id($index)"  
+							style="background-color: {{actividade.color}}"
+							ng-mouseover="pick_color2(actividade.color)"
+							ng-mouseleave="clear_active_color()"
+							ng-class="activecolor2(actividade.color)"
+							ng-click="setear_item(i,'actividades_attributes')" 
+							onclick="event.stopPropagation();" 
+							class="item_canva btn btn-default" 
+							tooltip="{{actividade.descripcion}}">
+								{{actividade.abreviacion}}
+							</a>
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="doble" ng-click="setear_seccion('propuestas_attributes')">
+							<div class="header_canva">Propuesta de valor </div></br>
+							<a ng-repeat="(i,propuesta) in canva.propuestas_attributes track by $id($index)"  
+							style="background-color: {{propuesta.color}}"
+							ng-mouseover="pick_color2(propuesta.color)"
+							ng-mouseleave="clear_active_color()"
+							ng-class="activecolor2(propuesta.color)"
+							ng-click="setear_item(i,'propuestas_attributes')" 
+							onclick="event.stopPropagation();" 
+							class="item_canva btn btn-default" 
+							tooltip="{{propuesta.descripcion}}">
+								{{propuesta.abreviacion}}
+							</a>
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="simple" ng-click="setear_seccion('relaciones_attributes')">
+							<div class="header_canva">Relaciones con el cliente</div></br>
+							<a ng-repeat="(i,relacione) in canva.relaciones_attributes track by $id($index)"  
+							style="background-color: {{relacione.color}}"
+							ng-mouseover="pick_color2(relacione.color)"
+							ng-mouseleave="clear_active_color()"
+							ng-class="activecolor2(relacione.color)"
+							ng-click="setear_item(i,'relaciones_attributes')" 
+							onclick="event.stopPropagation();" 
+							class="item_canva btn btn-default" 
+							tooltip="{{relacione.descripcion}}">
+								{{relacione.abreviacion}}
+							</a>
+						</div>
+						<div class="simple" ng-click="setear_seccion('canales_attributes')">
+							<div class="header_canva">Canales</div></br>
+							<a ng-repeat="(i,canale) in canva.canales_attributes track by $id($index)"  
+							style="background-color: {{canale.color}}"
+							ng-mouseover="pick_color2(canale.color)"
+							ng-mouseleave="clear_active_color()"
+							ng-class="activecolor2(canale.color)"
+							ng-click="setear_item(i,'canales_attributes')" 
+							onclick="event.stopPropagation();" 
+							class="item_canva btn btn-default" 
+							tooltip="{{canale.descripcion}}">
+								{{canale.abreviacion}}
+							</a>
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="doble" ng-click="setear_seccion('segmentos_attributes')">
+							<div class="header_canva">Segmentos de clientes</div></br>
+							<a ng-repeat="(i,segmento) in canva.segmentos_attributes track by $id($index)"  
+							style="background-color: {{segmento.color}}"
+							ng-mouseover="pick_color2(segmento.color)"
+							ng-mouseleave="clear_active_color()"
+							ng-class="activecolor2(segmento.color)"
+							ng-click="setear_item(i,'segmentos_attributes')" 
+							onclick="event.stopPropagation();" 
+							class="item_canva btn btn-default" 
+							tooltip="{{segmento.descripcion}}">
+								{{segmento.abreviacion}}
+							</a>
+						</div>
+					</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-5 col-lg-offset-1 simple_bajo" ng-click="setear_seccion('costos_attributes')">
+					<div class="header_canva">Estructura de costos</div></br>
+					<a ng-repeat="(i,costo) in canva.costos_attributes track by $id($index)"  
+					style="background-color: {{costo.color}}"
+					ng-mouseover="pick_color2(costo.color)"
+					ng-mouseleave="clear_active_color()"
+					ng-class="activecolor2(costo.color)"
+					ng-click="setear_item(i,'costos_attributes')" 
+					onclick="event.stopPropagation();" 
+					class="item_canva btn btn-default" 
+					tooltip="{{costo.descripcion}}">
+						{{costo.abreviacion}}
+					</a>
+				</div>
+				<div class="col-lg-5 simple_bajo" ng-click="setear_seccion('ingresos_attributes')">
+					<div class="header_canva">Modelo de ingresos</div></br>
+					<a ng-repeat="(i,ingreso) in canva.ingresos_attributes track by $id($index)"  
+					style="background-color: {{ingreso.color}}"
+					ng-mouseover="pick_color2(ingreso.color)"
+					ng-mouseleave="clear_active_color()"
+					ng-class="activecolor2(ingreso.color)"
+					ng-click="setear_item(i,'ingresos_attributes')" 
+					onclick="event.stopPropagation();" 
+					class="item_canva btn btn-default" 
+					tooltip="{{ingreso.descripcion}}">
+						{{ingreso.abreviacion}}
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="agregar">
+		<div class="modal-dialog">
+		  	<div class="modal-content">
+		    	<div class="modal-body">
+			    	<div class="dialog-header">
+						Agregar Item <button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="dialog-body">
+						<form>
+								<div class="form-group">
+									<label>Abreviación</label>
+									<input type="text" class="form-control" ng-model="item.abreviacion" /> </br>
+								</div>
+								<div>
+									<a ng-repeat="color in colors" class="colorpicker" ng-class="activecolor(color)" style="background-color:{{color}}" ng-click="pick_color(color)"></a>
+								</div>
+								<div class="form-group">
+									<label>Descripción</label>
+									<textarea class="form-control" ng-model="item.descripcion" rows="10"></textarea> </br>
+								</div>
+						</form>
+					</div>
+					<div class="dialog-footer" align="right">
+						<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">Cerrar</button>
+					    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="agregar_a_canva()">Agregar</button>
+					</div>
+		    	</div>
+	  		</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="editar">
+		<div class="modal-dialog">
+		  	<div class="modal-content">
+		    	<div class="modal-body">
+			    	<div class="dialog-header">
+						Editar Item <button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="dialog-body">
+						<form>
+								<div class="form-group">
+									<label>Abreviación</label>
+									<input type="text" class="form-control" ng-model="actualizable.abreviacion" value="{{item2.abreviacion}}"  /> </br>
+								</div>
+								<div>
+									<a ng-repeat="color in colors" class="colorpicker" ng-class="activecolor(color)" style="background-color:{{color}}" ng-click="pick_color(color)"></a>
+								</div>
+								<div class="form-group">
+									<label>Descripción</label>
+									<textarea class="form-control" ng-model="actualizable.descripcion" value="{{item2.descripcion}}" rows="10"></textarea> </br>
+								</div>
+						</form>
+					</div>
+					<div class="dialog-footer" align="right">
+						<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">Cerrar</button>
+					    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="editar_item()">Listo</button>
+					    <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="borrar_item()">Borrar</button>
+					</div>
+		    	</div>
+	  		</div>
+		</div>
+	</div>
+</div>
