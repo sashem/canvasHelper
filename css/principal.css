@@ -1,8 +1,32 @@
+html{
+	overflow-y: scroll;
+}
 body{
 	/*padding-top:60px;*/
 }
+.invisible a{
+	display:none !important;
+}
 .login{
 	height:200px;
+}
+.login-btn{
+	height:50px;
+	line-height:50px;
+	padding-top:0;
+	padding-bottom:0;
+}
+.top_menu{
+	padding:0 !important;
+}
+#login-btn.session-true{
+	display:none !important;
+}
+#login-btn.session-false{
+	display:block !important;
+}
+#session-menu .session-false, .navbar-nav .session-false{
+	display:none !important;
 }
 .header{
 	width:100%;
@@ -39,9 +63,49 @@ body{
 	padding-top:10px;
 	border-top: thin solid #CCC;
 }
-.proyectos{
+.proyectos, .datos{
 	border-radius: 5px;
 	border: solid 2px gray;
+}
+.nombre-proyecto{
+	
+}
+.acciones-proyecto{
+	width:180px;
+	padding:0;
+}
+.fecha{
+	width:120px;
+}
+.elemento-tabla-proyectos{
+	display:table-row;
+	margin:0;
+	padding:0;
+	height:90px;
+	overflow-y: hidden; 
+}
+.elemento-tabla-proyectos div{
+	margin:0;
+	vertical-align:middle;
+	display:table-cell;
+	border-top:thin solid #CCC;
+	padding:10px;
+}
+.elemento-canva{
+	padding:5px;
+	width:100%;
+}
+.droppable{
+	border-top:none !important;
+	/*display:block !important;*/
+	position:absolute !important;
+	left:0;
+	padding:0px;
+	width:100%;
+	height:90px;
+}
+.droppable.over{
+	background-color:rgba(0,150,50,0.5);;
 }
 .proyectos table{
 	width:100% !important;
@@ -57,14 +121,26 @@ body{
 	overflow: hidden; 
 }
 .proyectos .descripcion{
-	width:450px;
+	max-height:80px;
+	width:800px;
 	padding-left:10px;
 	padding-right:10px;
 	overflow: hidden;
 	text-align:justify;
 }
+.drag{
+	background-color: #CCC;
+}
 .proyectos .btn-primary{
 	margin-top:20px;
+}
+.proyecto_activo{
+	background-color:#0097CF;
+	color:#FFF;
+}
+.proyecto_activo:hover{
+	background-color:#0097CF !important;
+	color:#000 !important;
 }
 .canvas-select thead{
 	background-color: #E7E7FF;
@@ -93,7 +169,7 @@ body{
 	font-family: 'Kavoon', cursive;
 	color:#8080ff;
 }
-#canva_wrapp .col-lg-2{
+#canva_wrapp .col-lg-3, #canva_wrapp .col-lg-2{
 	padding-left:0;
 	padding-right:0;
 }
@@ -148,3 +224,123 @@ body{
 .deshacer_inactivo{
 	display:none;
 }
+.intro{
+	text-align:justify;
+}
+.intro h2{
+	border-bottom:thin solid #CCC;
+}
+.mensaje{
+	min-height:60px;
+	word-wrap:break-word;
+	/*white-space:pre-wrap;*/
+	padding:10px;
+	border-top:thin solid #CCC;
+}
+.mensajes{
+	padding-left: 0;
+	padding-right: 0;
+	margin-top:30px;
+	border-radius:5px;
+	border:thin solid #CCC;
+}
+.mensajes_header{
+	padding:10px;
+	border-radius: 5px;
+	background-color: #E7E7FF;
+}
+.mensaje p{
+	margin-bottom:0;
+	font-size:16pt;
+	font-family: 'The Girl Next Door', cursive;
+	/*font-family: 'Shadows Into Light', cursive;*/
+}
+.mensaje a{
+	margin-bottom:5px;
+}
+.mensaje .borrar_mensaje{
+	float:right;
+}
+.alert-success{
+	-webkit-animation-name: cerrar;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-delay: 1s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-fill-mode: forwards;
+}
+@-webkit-keyframes cerrar{
+	0% {opacity:1;}
+	100% {opacity:0;-webkit-transform:translate(0,-20px);}
+	opacity:0;
+}
+/* custom font! */
+/* ------------ */
+
+.typeahead,
+.tt-query,
+.tt-hint {
+  width: 396px;
+  height: 30px;
+  padding: 8px 12px;
+  font-size: 24px;
+  line-height: 30px;
+  border: 2px solid #ccc;
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  outline: none;
+}
+
+.typeahead {
+  background-color: #fff;
+}
+
+.typeahead:focus {
+  border: 2px solid #0097cf;
+}
+
+.tt-query {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+  color: #999
+}
+
+.tt-dropdown-menu {
+  width: 422px;
+  margin-top: 12px;
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+  color: #fff;
+  background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+
+.gist {
+  font-size: 14px;
+}
+

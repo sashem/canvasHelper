@@ -1,6 +1,5 @@
 function canvasCtrl($scope, $dialog, $http, mensajeria,$routeParams){
 		   /* ################# INICIALIZACIÓN DE VARIABLES ######################## */
-		  SERVER_URL="http://calm-meadow-8426.herokuapp.com/";
 		  historial_id="historial"+$routeParams.id;
 		  $scope.actualizable={};
 		  $scope.active_color="";
@@ -13,7 +12,7 @@ function canvasCtrl($scope, $dialog, $http, mensajeria,$routeParams){
 		  $http({method: 'POST', url: SERVER_URL+'canvas/fetch_canva', data:{id:$routeParams.id,cookie:$.cookie("session_key")}}).
 		  success(function(data, status, headers, config) {
 			$scope.canva=data.canva;
-			console.log($scope.canva);
+			if(data.msje)mensajeria.push(data.msje);
 		  }).
 		  error(function(data, status, headers, config) {
 		    // called asynchronously if an error occurs
@@ -22,8 +21,9 @@ function canvasCtrl($scope, $dialog, $http, mensajeria,$routeParams){
 		  
 		  /* ################# COMIENZO DE LAS FUNCIONES ######################## */
 		  
-		  $scope.setear_seccion=function(seccion){
+		  $scope.setear_seccion=function(seccion,nombre){
 		  	$scope.seccion=seccion;
+		  	$scope.nombre_seccion=nombre;
 		  	$scope.active_color=$scope.colors.color1;
 		  	$('#agregar').modal({show:true});
 		  };
@@ -42,26 +42,31 @@ function canvasCtrl($scope, $dialog, $http, mensajeria,$routeParams){
 		  	accion={tipo:"agregar",objeto:$scope.seccion};
 		  	$scope.agregar_a_historial(accion);
 		  	eval("$scope.canva."+$scope.seccion+"=$scope.canva."+$scope.seccion+"?$scope.canva."+$scope.seccion+":[];");
-		  	aux={};
-		  	aux[$scope.seccion]=[$scope.item];
-		  		$http({method: 'POST', url: SERVER_URL+'canvas/add_item', data:{canva:aux,id:$routeParams.id,cookie:$.cookie("session_key")}}).
+		  	//aux={};
+		  	//aux[$scope.seccion]=[$scope.item];
+		  		$http({method: 'POST', url: SERVER_URL+'canvas/add_item', data:{item:$scope.item,seccion:$scope.seccion,id:$routeParams.id,cookie:$.cookie("session_key")}}).
 					 success(function(data, status, headers, config) {
-					 	$scope.canva=data.canva;
+					 	//console.log(data);
+					 	if(data.item)eval("$scope.canva."+data.meta.seccion+".push(data.item)");
+					 	if(data.meta)if(data.meta.msge)mensajeria.push(data.meta.msge);
+					 	if(data.msge)mensajeria.push(data.msge);
 					 }).
 					  error(function(data, status, headers, config) {
 					 });
 		  	$scope.item="";
+		  	$scope.seccion="";
 		  	};
 		  $scope.editar_item=function(){
 		  	$scope.actualizable.color=$scope.active_color;
 		  	accion={tipo:"editar",objeto:$scope.seccion,indice:parseInt($scope.target_item_i),cambiado:eval("$scope.canva."+$scope.seccion+"[$scope.target_item_i]")};
 		  	$scope.agregar_a_historial(accion);
-		  	eval("$scope.canva."+$scope.seccion+"[$scope.target_item_i]=$scope.actualizable");
-		  	aux={};
-		  	aux[$scope.seccion]=[$scope.actualizable];
-		  		$http({method: 'POST', url: SERVER_URL+'canvas/add_item', data:{canva:aux,id:$routeParams.id,cookie:$.cookie("session_key")}}).
+		  	//eval("$scope.canva."+$scope.seccion+"[$scope.target_item_i]=$scope.actualizable");
+		  		$http({method: 'POST', url: SERVER_URL+'canvas/edit_item', data:{item:$scope.actualizable,seccion:$scope.seccion,id:$routeParams.id,cookie:$.cookie("session_key")}}).
 					 success(function(data, status, headers, config) {
-					 	$scope.canva=data.canva;
+					 	if(data.item)eval("$scope.canva."+data.meta.seccion+"[$scope.target_item_i]=data.item");
+					 	//if(data.canva)$scope.canva=data.canva;
+					 	if(data.meta)if(data.meta.msge)mensajeria.push(data.meta.msge);
+					 	if(data.msge)mensajeria.push(data.msge);
 					 }).
 					  error(function(data, status, headers, config) {
 					 });	
@@ -75,7 +80,9 @@ function canvasCtrl($scope, $dialog, $http, mensajeria,$routeParams){
 		  	id_a_borrar=eval("$scope.canva."+$scope.seccion+"[$scope.target_item_i].id");
 	  		$http({method: 'POST', url: SERVER_URL+'canvas/remove_item', data:{seccion:$scope.seccion,id_a_borrar:id_a_borrar,id:$routeParams.id,cookie:$.cookie("session_key")}}).
 			 success(function(data, status, headers, config) {
-			 	$scope.canva=data.canva;
+			 	if(data.canva)$scope.canva=data.canva;
+				if(data.meta)if(data.meta.msge)mensajeria.push(data.meta.msge);
+					 	if(data.msge)mensajeria.push(data.msge);
 			 }).
 			  error(function(data, status, headers, config) {
 			 });
@@ -87,6 +94,25 @@ function canvasCtrl($scope, $dialog, $http, mensajeria,$routeParams){
 		  	$scope.historial.push(obj);
 		  	$.jStorage.set(historial_id,$scope.historial);
 		  };
+		  $scope.agregar_mensaje=function(){
+		  	$scope.mensaje.canva_id=$scope.canva.id;
+		  	$http({method: 'POST', url: SERVER_URL+'mensajes/create', data:{mensaje:$scope.mensaje,cookie:$.cookie("session_key")}}).
+			 success(function(data, status, headers, config) {
+			 	$scope.canva.mensajes=data.mensajes;
+			 	//console.log(data);
+			 }).
+			  error(function(data, status, headers, config) {
+			 });
+		  };
+		  $scope.borrar_mensaje=function(id){
+		  	$http({method: 'POST', url: SERVER_URL+'mensajes/delete', data:{mensaje:{id:id},cookie:$.cookie("session_key")}}).
+			 success(function(data, status, headers, config) {
+			 	if(data.mensajes)$scope.canva.mensajes=data.mensajes;
+			 	if(data.msge)mensajeria.push(data.msge);
+			 }).
+			  error(function(data, status, headers, config) {
+			 });
+		  };
 		  $scope.deshacer = function(){
 		  	if($scope.historial.length>0){
 			  	indice=$scope.historial.length-1;
@@ -97,9 +123,11 @@ function canvasCtrl($scope, $dialog, $http, mensajeria,$routeParams){
 			  		delete ultimo.borrado.id;
 			  		aux={};
 				  	aux[ultimo.objeto]=[ultimo.borrado];
-				  		$http({method: 'POST', url: SERVER_URL+'canvas/add_item', data:{canva:aux,id:$routeParams.id,cookie:$.cookie("session_key")}}).
+							 $http({method: 'POST', url: SERVER_URL+'canvas/add_item', data:{item:ultimo.borrado,seccion:ultimo.objeto,id:$routeParams.id,cookie:$.cookie("session_key")}}).
 							 success(function(data, status, headers, config) {
-							 	$scope.canva=data.canva;
+							 	//console.log(data);
+							 	if(data.item)eval("$scope.canva."+data.meta.seccion+".push(data.item)");
+							 	if(data.meta.msge)mensajeria.push(data.meta.msge);
 							 }).
 							  error(function(data, status, headers, config) {
 							 });
@@ -123,20 +151,19 @@ function canvasCtrl($scope, $dialog, $http, mensajeria,$routeParams){
 			  		//obj[ultimo.indice]=ultimo.cambiado;
 			  		aux={};
 				  	aux[ultimo.objeto]=[ultimo.cambiado];
-				  		$http({method: 'POST', url: SERVER_URL+'canvas/add_item', data:{canva:aux,id:$routeParams.id,cookie:$.cookie("session_key")}}).
-							 success(function(data, status, headers, config) {
-							 	$scope.canva=data.canva;
-							 }).
-							  error(function(data, status, headers, config) {
-							 });
+				  		$http({method: 'POST', url: SERVER_URL+'canvas/edit_item', data:{item:ultimo.cambiado,seccion:ultimo.objeto,id:$routeParams.id,cookie:$.cookie("session_key")}}).
+						 success(function(data, status, headers, config) {
+						 	if(data.item)eval("$scope.canva."+data.meta.seccion+"[ultimo.indice]=data.item");
+						 	//if(data.canva)$scope.canva=data.canva;
+						 	if(data.meta.msge)mensajeria.push(data.meta.msge);
+						 }).
+						  error(function(data, status, headers, config) {
+						 });
 			  		$scope.historial.splice(indice,1);
 			  		$.jStorage.set(historial_id,$scope.historial);
 			  	}
 		  	}
 		  };
-		  /* $scope.check_color=function(){
-		  	
-		  };*/
 		  $scope.activecolor=function(color){
 		  	if(color==$scope.active_color) return "active";
 		  	else return "";

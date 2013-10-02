@@ -1,7 +1,6 @@
 function canvasCtrl($scope, $dialog, $http, mensajeria,$routeParams){
 		  
 		   /* ################# INICIALIZACIÓN DE VARIABLES ######################## */
-		  SERVER_URL="http://calm-meadow-8426.herokuapp.com/";
 		  canva_id="canva"+$routeParams.id;
 		  historial_id="historial2"+$routeParams.id;
 		  $scope.canva=$.jStorage.get(canva_id)?$.jStorage.get(canva_id):{};

@@ -5,11 +5,17 @@
 		<script src="js/jquery-1.8.0.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/angular.min.js"></script>
+		<script src="js/angular-resource.min.js"></script>
 		<script src="js/ui-bootstrap-tpls-0.5.0.min.js"></script>
+		<script src="js/typeahead.js"></script>
+		<script src="js/hogan-2.0.0.js"></script>
 		<script src="js/jstorage.js"></script>
 		<script src="js/jquery.cookie.js"></script>
 		<script src="js/bootbox.min.js"></script>
 		<script src="js/principal_controller.js"></script>
+		<script src="js/canvasCtrl_autosave.js"></script>
+		<script src="js/proyectosCtrl.js"></script>
+		<script src="js/datosCtrl.js"></script>
 		<link rel="stylesheet" href="css/bootstrap.css" />
 		<link rel="stylesheet" href="css/principal.css" />
 	</head>
@@ -20,19 +26,22 @@
 					<img src="./imgs/logotipo1.png"  height="50px"/>
 				</div></div>
 			<div class="row">
-				<div class="col-lg-12 top_menu">
+				<div class="col-lg-12 top_menu" ng-controller="sessionCtrl">
 					<div class="navbar navbar-default" role="navigation">
 						<ul class="nav navbar-nav">
-						    <li class="active"><a href="#main">Inicio</a></li>					    
+						    <li ng-class="check_active('inicio')"><a href="#inicio">Inicio</a></li>
+						    <li ng-class="check_active('proyectos')"><a href="#proyectos" ng-class="check_session()" ng-click="load_proyectos()">Mis proyectos</a></li>				    
 						</ul>
-
+						<ul class="nav navbar-nav pull-right">
+							<li class="btn btn-success login-btn" ng-class="check_session()" id="login-btn" href="#login" data-toggle="modal">Iniciar sesión</li>
+						</ul>
 						<ul id="session-menu" class="nav navbar-nav pull-right">
-							<li class="dropdown" ng-controller="sessionCtrl">
-									<a class="navbar-btn dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b>
+							<li class="dropdown" >
+									<a class="navbar-btn dropdown-toggle user_menu" ng-class="check_session()" data-toggle="dropdown">Menu <b class="caret"></b>
 									</a>
 									<ul class="dropdown-menu pull-right">
 										<li><a href="#datos" >Mis datos</a></li>
-										<li><a href="#proyectos" ng-click="load_proyectos()">Mis proyectos</a></li>
+										
 										<li><a href="#" ng-click="session_close()">Cerrar sesión</a></li>							
 									</ul>
 							</li>
@@ -43,8 +52,9 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-12 msge">
+					
 					<div ng-controller="mensajesCtrl">
-					  <alert ng-repeat="alert in mensajes" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+					  <alert ng-repeat="(i,alert) in mensajes" class="cerrar" type="alert.type">{{alert.msg}}</alert>
 					</div>
 				</div>
 			</div>
